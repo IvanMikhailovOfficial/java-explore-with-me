@@ -20,7 +20,7 @@ public class StatsServiceImpl implements StatsService {
 
     @Override
     public EndpointHitDto addHit(EndpointHitDto dto) {
-        log.debug("EndpointHit успешно добавлен");
+        log.info("EndpointHit успешно добавлен");
         return HitMapper.toEndpointHitDto(repository.save(HitMapper.toEndpointHit(dto)));
     }
 
@@ -29,15 +29,17 @@ public class StatsServiceImpl implements StatsService {
         if (start.isAfter(end)) throw new DateTimeException("Дата начала не может быть позже конца");
         if (unique) {
             if (uris != null) {
-                log.debug("статистика получена");
+                log.info("статистика получена");
                 return repository.getUniqueStats(start, end, uris);
-            } else return repository.getUniqueWithoutUris(start, end);
+            } else {
+                return repository.getUniqueWithoutUris(start, end);
+            }
         }
         if (uris == null) {
-            log.debug("статистика получена");
+            log.info("статистика получена");
             return repository.getWithoutUris(start, end);
         }
-        log.debug("статистика получена");
+        log.info("статистика получена");
         return repository.getStats(start, end, uris);
     }
 }
