@@ -21,7 +21,6 @@ public class StatsServiceImpl implements StatsService {
     @Override
     public EndpointHitDto addHit(EndpointHitDto dto) {
         log.info("EndpointHit успешно добавлен");
-
         return HitMapper.toEndpointHitDto(repository.save(HitMapper.toEndpointHit(dto)));
     }
 
