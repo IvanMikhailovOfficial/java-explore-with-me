@@ -12,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 
 @UtilityClass
 public class RequestMapper {
+
+
     public ParticipationRequestDto toRequestDto(ParticipationRequest request) {
         return ParticipationRequestDto.builder()
                 .created(request.getCreated().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))

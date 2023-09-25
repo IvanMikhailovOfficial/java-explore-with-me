@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 
 @UtilityClass
 public class EventMapper {
+
+
     public EventFullDto toEventFullDto(Event event) {
         return EventFullDto.builder()
                 .id(event.getId())

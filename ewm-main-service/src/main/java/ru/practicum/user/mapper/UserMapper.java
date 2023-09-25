@@ -8,6 +8,8 @@ import ru.practicum.user.model.User;
 
 @UtilityClass
 public class UserMapper {
+
+
     public UserDto toUserDto(User user) {
         return UserDto.builder()
                 .name(user.getName())

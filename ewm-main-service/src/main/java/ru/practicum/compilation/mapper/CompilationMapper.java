@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 
 @UtilityClass
 public class CompilationMapper {
+
+
     public Compilation toCompilation(NewCompilationDto compilationDto,
                                      Set<Event> events) {
         return Compilation.builder()

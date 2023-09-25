@@ -6,6 +6,7 @@ import ru.practicum.model.EndpointHit;
 
 @UtilityClass
 public class HitMapper {
+
     public EndpointHit toEndpointHit(EndpointHitDto dto) {
         return EndpointHit.builder()
                 .timestamp(dto.getTimestamp())
