@@ -95,7 +95,7 @@ public class EventServiceImpl implements EventService {
                     "Изменить можно только ожидающие или отмененные события.");
         }
 
-        if (request.getStateAction() != null) {
+        if (Objects.nonNull(request.getStateAction())) {
             event.setState(request.getStateAction() == StateAction.SEND_TO_REVIEW ?
                     EventState.PENDING : EventState.CANCELED);
         }

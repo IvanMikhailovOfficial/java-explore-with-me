@@ -17,6 +17,7 @@ import ru.practicum.event.repository.EventRepository;
 import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,7 @@ public class CompilationServiceImpl implements CompilationService {
     @Override
     public CompilationDto addCompilation(NewCompilationDto compilationDto) {
         Set<Event> events = new HashSet<>();
-        if (compilationDto.getEvents() != null) {
+        if (Objects.nonNull(compilationDto.getEvents())) {
             events = Set.copyOf(eventRepository.findAllById(compilationDto.getEvents()));
         }
         CompilationDto result = CompilationMapper.toCompilationDto(
@@ -53,13 +54,14 @@ public class CompilationServiceImpl implements CompilationService {
         Compilation compilation = compilationRepository.findById(compId).orElseThrow(() ->
                 new EntityNotFoundException("Compilation c id= " + compId + " не найден"));
 
-        if (request.getPinned() != null) {
+        if (Objects.nonNull(request.getPinned())) {
             compilation.setPinned(request.getPinned());
         }
-        if (request.getTitle() != null) {
+        if (Objects.nonNull(request.getTitle())) {
+
             compilation.setTitle(request.getTitle());
         }
-        if (request.getEvents() != null) {
+        if (Objects.nonNull(request.getEvents())) {
             compilation.setEvents(
                     new HashSet<>(eventRepository.findAllById(request.getEvents())));
         }
@@ -79,9 +81,11 @@ public class CompilationServiceImpl implements CompilationService {
     @Override
     public List<CompilationDto> getCompilations(Boolean pinned, Integer from, Integer size) {
         List<Compilation> compilations;
-        if (pinned != null)
+        if (Objects.nonNull(pinned)) {
             compilations = compilationRepository.findByPinned(pinned, PageRequest.of(from / size, size));
-        else compilations = compilationRepository.findAll(PageRequest.of(from / size, size)).getContent();
+        } else {
+            compilations = compilationRepository.findAll(PageRequest.of(from / size, size)).getContent();
+        }
         List<CompilationDto> result = compilations.stream()
                 .map(CompilationMapper::toCompilationDto)
                 .collect(Collectors.toList());

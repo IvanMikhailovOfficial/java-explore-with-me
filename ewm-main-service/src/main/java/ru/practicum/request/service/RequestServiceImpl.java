@@ -72,7 +72,6 @@ public class RequestServiceImpl implements RequestService {
         return result;
     }
 
-
     @Override
     public List<ParticipationRequestDto> getRequests(Long userId) {
         userRepository.findById(userId).orElseThrow(() ->
