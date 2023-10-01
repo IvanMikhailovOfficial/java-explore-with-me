@@ -18,12 +18,12 @@ import java.util.List;
 @Slf4j
 @Validated
 public class StatsController {
-    private final StatsService service;
+    private final StatsService statsService;
 
     @PostMapping("/hit")
     public ResponseEntity<EndpointHitDto> addHit(@Valid @RequestBody EndpointHitDto hit) {
-        log.debug("Получен  POST запрос на эндоинту /hit: {}", hit);
-        return new ResponseEntity<>(service.addHit(hit), HttpStatus.OK);
+        log.info("Получен  POST запрос на эндоинту /hit: {}", hit);
+        return new ResponseEntity<>(statsService.addHit(hit), HttpStatus.CREATED);
     }
 
     @GetMapping("/stats")
@@ -32,7 +32,7 @@ public class StatsController {
                                                     @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
                                                     @RequestParam(required = false) String[] uris,
                                                     @RequestParam(defaultValue = "false") boolean unique) {
-        log.debug("Запрос GET запрос на получение стат с {} до {}", start, end);
-        return new ResponseEntity<>(service.getStats(start, end, uris, unique), HttpStatus.OK);
+        log.info("Запрос GET запрос на получение стат с {} до {}", start, end);
+        return new ResponseEntity<>(statsService.getStats(start, end, uris, unique), HttpStatus.OK);
     }
 }

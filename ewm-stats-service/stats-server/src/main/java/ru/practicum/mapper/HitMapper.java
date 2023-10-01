@@ -1,11 +1,13 @@
 package ru.practicum.mapper;
 
+import lombok.experimental.UtilityClass;
 import ru.practicum.EndpointHitDto;
 import ru.practicum.model.EndpointHit;
 
+@UtilityClass
 public class HitMapper {
 
-    public static EndpointHit toEndpointHit(EndpointHitDto dto) {
+    public EndpointHit toEndpointHit(EndpointHitDto dto) {
         return EndpointHit.builder()
                 .timestamp(dto.getTimestamp())
                 .uri(dto.getUri())
@@ -14,7 +16,7 @@ public class HitMapper {
                 .build();
     }
 
-    public static EndpointHitDto toEndpointHitDto(EndpointHit hit) {
+    public EndpointHitDto toEndpointHitDto(EndpointHit hit) {
         return EndpointHitDto.builder()
                 .timestamp(hit.getTimestamp())
                 .uri(hit.getUri())
