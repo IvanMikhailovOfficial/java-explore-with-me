@@ -78,7 +78,7 @@ public class RequestServiceImpl implements RequestService {
         userRepository.findById(userId).orElseThrow(() ->
                 new EntityNotFoundException("Юзер с id " + userId + " не найден"));
         List<ParticipationRequestDto> result = requestRepository.findByRequester_Id(userId).stream()
-                .map(RequestMapper::toRequestDto)
+                .map(a->RequestMapper.toRequestDto(a))
                 .collect(Collectors.toList());
         log.info("Успено получены запросы от юзера с id {}", userId);
         return result;

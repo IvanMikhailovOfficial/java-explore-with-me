@@ -56,7 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
         PageRequest pageRequest = PageRequest.of(from / size, size);
         List<CategoryDto> categoryDtoList = categoryRepository
                 .findAll(pageRequest)
-                .map(CategoryMapper::toCategoryDto)
+                .map(a -> CategoryMapper.toCategoryDto(a))
                 .toList();
         log.info("Получена категории с параметрами from {} и size {}", from, size);
         return categoryDtoList;
