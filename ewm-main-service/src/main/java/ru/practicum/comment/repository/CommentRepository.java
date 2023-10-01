@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.practicum.comment.model.Comment;
 
 import java.util.List;
+
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
