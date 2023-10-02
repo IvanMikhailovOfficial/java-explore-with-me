@@ -87,7 +87,7 @@ public class CompilationServiceImpl implements CompilationService {
             compilations = compilationRepository.findAll(PageRequest.of(from / size, size)).getContent();
         }
         List<CompilationDto> result = compilations.stream()
-                .map(CompilationMapper::toCompilationDto)
+                .map(a -> CompilationMapper.toCompilationDto(a))
                 .collect(Collectors.toList());
         log.info("Compilations получены с параметрами pinned ={},from={},size={}", pinned, from, size);
         return result;

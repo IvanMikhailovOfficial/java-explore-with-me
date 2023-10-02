@@ -13,6 +13,7 @@ import ru.practicum.user.repository.UserRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getUsers(List<Long> ids, Integer from, Integer size) {
         Pageable pageable = PageRequest.of(from / size, size);
-        if (ids == null) {
+        if (Objects.isNull(ids)) {
             log.info("Список user-ов получен");
             return userRepository
                     .findAll(pageable)

@@ -77,7 +77,7 @@ public class EventServiceImpl implements EventService {
                 new EntityNotFoundException("User с id " + userId + " не найден"));
         Pageable pageable = PageRequest.of(from / size, size);
         List<Event> events = eventRepository.findByInitiator(user, pageable);
-        List<EventShortDto> result = events.stream().map(EventMapper::toEventShortDto).collect(Collectors.toList());
+        List<EventShortDto> result = events.stream().map(a -> EventMapper.toEventShortDto(a)).collect(Collectors.toList());
         log.info("Events получены по userId {} from {} size {}", userId, from, size);
         return result;
     }
@@ -112,7 +112,7 @@ public class EventServiceImpl implements EventService {
         eventRepository.findByIdAndInitiator_Id(eventId, userId).orElseThrow(() ->
                 new EntityNotFoundException("Event с id " + eventId + " не найден"));
         List<ParticipationRequestDto> result = requestRepository.findByEvent_Id(eventId).stream()
-                .map(RequestMapper::toRequestDto)
+                .map(a -> RequestMapper.toRequestDto(a))
                 .collect(Collectors.toList());
         log.info("getRequests c параметрами userId {} eventId {} успешнов выполен", userId, eventId);
         return result;
@@ -151,9 +151,9 @@ public class EventServiceImpl implements EventService {
         requestRepository.saveAll(requests);
         EventRequestStatusUpdateResult result = EventRequestStatusUpdateResult.builder()
                 .confirmedRequests(requestRepository.findByEvent_IdAndStatus(eventId, RequestStatus.CONFIRMED).stream()
-                        .map(RequestMapper::toRequestDto).collect(Collectors.toList()))
+                        .map(a -> RequestMapper.toRequestDto(a)).collect(Collectors.toList()))
                 .rejectedRequests(requestRepository.findByEvent_IdAndStatus(eventId, RequestStatus.REJECTED).stream()
-                        .map(RequestMapper::toRequestDto).collect(Collectors.toList())).build();
+                        .map(a -> RequestMapper.toRequestDto(a)).collect(Collectors.toList())).build();
         log.info("Обновление Request по userId {} eventId {} прошло успешно", userId, eventId);
         return result;
     }
@@ -190,7 +190,7 @@ public class EventServiceImpl implements EventService {
                         params.getPaid(), params.getRangeStart(),
                         params.getRangeEnd(), params.getOnlyAvailable(),
                         PageRequest.of(params.getFrom() / params.getSize(), params.getSize()))
-                .stream().map(EventMapper::toEventShortDto).collect(Collectors.toList());
+                .stream().map(a -> EventMapper.toEventShortDto(a)).collect(Collectors.toList());
 
         boolean sortBool = false;
         if (params.getSort() != null) {
